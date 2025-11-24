@@ -185,4 +185,33 @@ def submit_answer(
 def get_activities(student_id: int, db: Session = Depends(get_db)):
     activities = crud.get_student_activities(db, student_id)
     return activities
+from fastapi import FastAPI
+import random
+
+app = FastAPI()
+
+# Nursing questions inline
+questions = [
+    {
+        "id": 1,
+        "question": "What is the normal range of adult body temperature?",
+        "keywords": ["temperature", "adult", "normal"],
+        "options": ["35°C - 37°C", "37°C - 39°C", "36°C - 38°C", "34°C - 36°C"],
+        "correct_answer": "35°C - 37°C",
+        "score": 1
+    },
+    {
+        "id": 2,
+        "question": "Which symptom is most common in dehydration?",
+        "keywords": ["dehydration", "symptom", "fluid"],
+        "options": ["Dry mouth and lips", "Excessive urination", "Weight gain", "Low blood pressure"],
+        "correct_answer": "Dry mouth and lips",
+        "score": 1
+    }
+    # Add more questions here
+]
+
+@app.get("/generate-question")
+def generate_question():
+    return random.choice(questions)
 
